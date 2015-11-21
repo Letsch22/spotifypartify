@@ -3,9 +3,30 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script>
+        //AJAX post to create playlist
+        function createPlaylist(){      
+            var name = document.getElementById('name').value;  
+            console.log(name);        
+            $.ajax( {
+                url: '/create',
+                type: 'POST',
+                data: {"name": name, "id": <%= id %>, "access_token": '<%= access_token %>', "refresh_token": '<%= refresh_token %>'},
+                success: function(res) {
+                    console.log('success');  
+                    console.log(res);
+                    window.open('/');
+                }
+            });                              
+        }
+        console.log( <%= body.id %> );
+    </script>
   </head>
   <body>
     <h1><%= title %></h1>
-
+    <p>ID: <%= id %></p>
+    <input id="name" name="name" type="text" />  
+    <button onclick="createPlaylist()">Create Playlist</button>
   </body>
 </html>
