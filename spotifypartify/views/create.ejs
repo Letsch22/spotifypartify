@@ -12,7 +12,7 @@
             $.ajax( {
                 url: '/create',
                 type: 'POST',
-                data: {"name": name, "id": <%= id %>, "access_token": '<%= access_token %>', "refresh_token": '<%= refresh_token %>'},
+                data: {"name": name, "id": "<%= id %>", "access_token": '<%= access_token %>', "refresh_token": '<%= refresh_token %>'},
                 success: function(res) {
                     console.log('success');  
                     console.log(res);
