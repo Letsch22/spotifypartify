@@ -114,4 +114,10 @@ router.post('/create', function(req, res){
     */
 });
 
+router.post('/', function(req, res){
+  playlists.sortPlaylists(req.body.long, req.body.lat, function(array){
+    res.send(array);
+  })
+});
+
 module.exports = router;

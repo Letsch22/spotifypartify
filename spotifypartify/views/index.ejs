@@ -3,6 +3,23 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script>
+          $( document ).ready(function(){      
+          var name = document.getElementById('name').value;  
+          console.log(name);        
+          $.ajax( {
+              url: '/create',
+              type: 'POST',
+              data: {"name": name, "id": "<%= id %>", "access_token": '<%= access_token %>', "refresh_token": '<%= refresh_token %>'},
+              success: function(res) {
+                  console.log('success');  
+                  console.log(res);
+                  window.open('/');
+              }
+          });                              
+      });
+      console.log( "<%= body.id %>" );
+    </script>
   </head>
   <body>
     <h1><%= title %></h1>
