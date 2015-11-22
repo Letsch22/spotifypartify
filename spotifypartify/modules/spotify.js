@@ -68,34 +68,48 @@ exports.createPlaylist = function(id, name, access_token, refresh_token, code,  
 
 exports.getPlaylist = function(user_id, playlist_id, access_token, refresh_token, code, callback)
 {
-    /*
-    console.log('right here');
-    console.log(access_token);
-    console.log(refresh_token);
+
+
     spotifyApi.setAccessToken(access_token);
     spotifyApi.setRefreshToken(refresh_token);
     spotifyApi.refreshAccessToken(function(err, data){
-        console.log(data);
+        console.log(data.body.access_token);
+        spotifyApi.setAccessToken(data.body.access_token);
+        console.log('---------');
+        console.log(user_id);
+        console.log(playlist_id);
+        spotifyApi.getPlaylist(user_id, playlist_id)
+        .then(function(data) {
+            console.log('Some information about this playlist', data.body);
+            callback(data.body);
+        }, function(err) {
+            console.log('Something went wrong!', err);
+        });
     });
-    */
+
     /*
     spotifyApi.setAccessToken(access_token);
     console.log('hi');
     spotifyApi.getUserPlaylists(user_id, function(err, data) {
+        console.log(err);
+        console.log(data);
         console.log('Some information about this playlist', data.body);
         callback(data.body);
     });
     */
-
+    /*
     // First retrieve an access token
     spotifyApi.authorizationCodeGrant(code, function(err, data){
+        console.log('adfasfdasdfasdfasdf');
+        console.log(err);
+        console.log(data);
         spotifyApi.setAccessToken(data.body['access_token']);
-        console.log('hi');
+        console.log('-------------hi');
         spotifyApi.getUserPlaylists(user_id, playlist_id, function(err, data) {
             console.log('Some information about this playlist', data.body);
             callback(data.body);
         });
     });
-
+    */
     
 }
