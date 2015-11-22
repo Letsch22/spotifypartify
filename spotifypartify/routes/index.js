@@ -96,22 +96,10 @@ router.post('/create', function(req, res){
     
     spotify.createPlaylist(req.body.id, req.body.name, req.body.access_token, function(data){
         console.log(data.body);
+        
         res.send(data.body);
     });
     
-    /*
-    spotifyApi.setAccessToken(req.body.access_token);
-    console.log(typeof(req.body.name));
-    // Create new playlist
-    spotifyApi.createPlaylist(req.body.id, req.body.name, {'public': true}, function(err, data) {
-        if (err) {
-            console.error('Something went wrong!');
-        } else {
-            console.log(data.body);
-            res.send(data.body);
-        }
-    });
-    */
 });
 
 module.exports = router;

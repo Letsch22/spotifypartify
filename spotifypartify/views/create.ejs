@@ -21,12 +21,26 @@
             });                              
         }
         console.log( "<%= body.id %>" );
+        var longitude = null;
+        var latitude = null;
+        $( document ).ready(function() {
+            navigator.geolocation.getCurrentPosition(function(position){
+                longitude = position.coords.longitude;
+                latitude = position.coords.latitude;
+                document.getElementById('longitude').value = longitude;
+                document.getElementById('latitude').value = latitude;
+            });
+        });
     </script>
   </head>
   <body>
     <h1><%= title %></h1>
     <p>ID: <%= id %></p>
-    <input id="name" name="name" type="text" />  
-    <button onclick="createPlaylist()">Create Playlist</button>
+    <form type="POST" name="createPlaylist">
+        <input id="name" name="name" type="text" />  
+        <input id="longitude" name="longitude" type="text" />
+        <input id="latitude" name="latitude" type="text" />
+        <button onclick="createPlaylist()">Create Playlist</button>
+    </form>
   </body>
 </html>
