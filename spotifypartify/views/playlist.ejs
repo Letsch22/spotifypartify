@@ -36,10 +36,10 @@
             
         function renderSongs(playlist){
             var html = "";
-            console.log(playlist.body.body.tracks.items);
-            for (var i = 0; i < playlist.body.body.tracks.items ; i++){
-                console.log(playlist.body.body.tracks[i]);
-                //html += '<a href="/playlist?id=' + res[i].body.body.id + '" class="list-group-item list-group-item-linkable">' + res[i].name + '</a>';
+            var tracks = playlist.tracks.items;
+            for (var i = 0; i < tracks.length ; i++){
+                console.log(tracks[i]);
+                html += '<li>'+ tracks[i].track.name +'</li>';
             }
             document.getElementById('playlist-songs').innerHTML = html;
         }
