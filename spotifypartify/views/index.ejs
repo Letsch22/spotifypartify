@@ -6,21 +6,27 @@
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script>
       $( document ).ready(function(){       
-          $.ajax( {
-              url: '/',
-              type: 'POST',
-              data: {"long": -1, "lat": 1},
-              success: function(res) {
-                  console.log('success');  
-                  console.log(res);
-                  var html = "";
-                  for (var i = 0; i <= res.length - 1; i++){
-                    console.log(res[i].body);
-                    html += '<a href="/playlist?id=' + res[i].body.body.id + '" class="list-group-item list-group-item-linkable">' + res[i].name + '</a>';
+          var longitude = null;
+          var latitude = null;
+          navigator.geolocation.getCurrentPosition(function(position){
+                longitude = position.coords.longitude;
+                latitude = position.coords.latitude;
+                $.ajax( {
+                  url: '/',
+                  type: 'POST',
+                  data: {"long": longitude, "lat": latitude},
+                  success: function(res) {
+                      console.log('success');  
+                      console.log(res);
+                      var html = "";
+                      for (var i = 0; i <= res.length - 1; i++){
+                        console.log(res[i].body);
+                        html += '<a href="/playlist?id=' + res[i].body.body.id + '" class="list-group-item list-group-item-linkable">' + res[i].name + '</a>';
+                      }
+                      document.getElementById('playlists').innerHTML = html;
                   }
-                  document.getElementById('playlists').innerHTML = html;
-              }
-          });                              
+              });    
+            });                     
       });
     </script>
   </head>
