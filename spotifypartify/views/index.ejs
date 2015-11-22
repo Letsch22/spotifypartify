@@ -15,8 +15,8 @@
                   console.log(res);
                   var html = "";
                   for (var i = 0; i <= res.length - 1; i++){
-                    console.log(res[i].id);
-                    html += '<li class="list-group-item"><a href="/playlist&id=' + res[i].body.body.id + '">' + res[i].name + '</a></li>';
+                    console.log(res[i].body);
+                    html += '<a href="/playlist?id=' + res[i].body.body.id + '" class="list-group-item list-group-item-linkable">' + res[i].name + '</a>';
                   }
                   document.getElementById('playlists').innerHTML = html;
               }
@@ -38,16 +38,19 @@
   </div>
     </nav>
     <div class="container">
-    <div class="jumbotron">
-      <h1>spotifypartify</h1>
-      <p>Collaborate with your fellow party-goers on a communal Spotify playlist. If you see your party in the list below, join it! Or create a new playlist for your party.</p>
+      <div class="jumbotron">
+        <h1>spotifypartify</h1>
+        <p>Collaborate with your fellow party-goers on a communal Spotify playlist. If you see your party in the list below, join it! Or create a new playlist for your party.</p>
+      </div>
+      <div class="col-md-6">
+        <h2>Nearby Playlists</h2>
+      </div>
+      <div class="col-md-6">
+        <a href="/create" type="submit" class="btn btn-lg btn-default pull-right" role="button"><span class="glyphicon glyphicon-plus"></span> Create Playlist</a>
+      </div>
+      <div class="col-md-12">
+        <ul id="playlists" class="list-group"></ul>
+      </div>
     </div>
-    <div class="col-md-6">
-      <h2>Nearby Playlists</h2>
-    </div>
-    <div class="col-md-6">
-      <a href="/create" type="submit" class="btn btn-lg btn-default pull-right" role="button"><span class="glyphicon glyphicon-plus"></span> Create Playlist</a>
-    </div>
-    <ul id="playlists" class="list-group"></ul>
   </body>
 </html>
