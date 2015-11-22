@@ -94,6 +94,8 @@ router.get('/create', function(req, res, next) {
 //GET Playlist 
 router.get('/playlist', function(req, res, next) { 
     var playlistID = req.query.id;
+    res.render('playlist', { title: 'Playlist' , id: playlistID});
+    /*
     playlists.getPlaylistById(playlistID, function(playlist){
         console.log(playlist[0]);
         spotify.getPlaylist(playlist[0].id, playlist[0].body.body.id, playlist[0].access_token, playlist[0].refresh_token, playlist[0].code, function(data){
@@ -101,15 +103,18 @@ router.get('/playlist', function(req, res, next) {
             res.render('playlist', { title: 'Playlist - ' + playlist[0].name , id: playlistID});
         });
     })
+    */
 });
 
 //POST Playlist 
 router.post('/playlist', function(req, res) { 
     var playlistID = req.body.playlist_id;
     playlists.getPlaylistById(playlistID, function(playlist){
-        console.log(playlist[0]);
         spotify.getPlaylist(playlist[0].id, playlist[0].body.body.id, playlist[0].access_token, playlist[0].refresh_token, playlist[0].code, function(data){
-            console.log(playlist[0].body.body.tracks);
+            console.log('---------');
+            console.log(data);
+            console.log('---------');
+            res.send(data);
         });
     })
 });
