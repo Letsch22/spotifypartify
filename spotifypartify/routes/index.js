@@ -110,7 +110,8 @@ router.get('/playlist', function(req, res, next) {
 router.post('/playlist', function(req, res) { 
     var playlistID = req.body.playlist_id; 
         playlists.getPlaylistById(playlistID, function(playlist){
-            if(req.body.key == 'getTracks') {
+            console.log(req.body.key);
+            if(req.body.key == 'getSongs') {
                 spotify.getPlaylist(playlist[0].id, playlist[0].body.body.id, playlist[0].access_token, playlist[0].refresh_token, playlist[0].code, function(data){
                     console.log('---------');
                     console.log(data);
@@ -118,7 +119,7 @@ router.post('/playlist', function(req, res) {
                     res.send(data);
                 });
             }
-            else {
+            else if (req.body.key == 'searchTracks') {
                 spotify.searchTracks(req.body.track_name, playlist[0].access_token, playlist[0].refresh_token, function(data){
                     console.log(data);
                     res.send(data);

@@ -73,18 +73,20 @@ exports.getPlaylist = function(user_id, playlist_id, access_token, refresh_token
     spotifyApi.setAccessToken(access_token);
     spotifyApi.setRefreshToken(refresh_token);
     spotifyApi.refreshAccessToken(function(err, data){
-        console.log(data.body.access_token);
-        spotifyApi.setAccessToken(data.body.access_token);
-        console.log('---------');
-        console.log(user_id);
-        console.log(playlist_id);
-        spotifyApi.getPlaylist(user_id, playlist_id)
-        .then(function(data) {
-            console.log('Some information about this playlist', data.body);
-            callback(data.body);
-        }, function(err) {
-            console.log('Something went wrong!', err);
-        });
+        playlists.update({"body.body.id": playlist_id},{$set: {"access_token": data.body.access_token}}, function(){
+            console.log(data.body.access_token);
+            spotifyApi.setAccessToken(data.body.access_token);
+            console.log('---------');
+            console.log(user_id);
+            console.log(playlist_id);
+            spotifyApi.getPlaylist(user_id, playlist_id)
+            .then(function(data) {
+                console.log('Some information about this playlist', data.body);
+                callback(data.body);
+            }, function(err) {
+                console.log('Something went wrong!', err);
+            });
+        })
     });
 
     /*
