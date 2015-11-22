@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css' />
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script>
         //AJAX post to create playlist
@@ -37,12 +37,35 @@
     </script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>ID: <%= id %></p>
-    <input id="name" name="name" type="text" />  
-    <input id="longitude" name="longitude" type="text" />
-    <input id="latitude" name="latitude" type="text" />
-    <input id="password" name="password" type="text" />
-    <button onclick="createPlaylist()">Create Playlist</button>
+  <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="/"><span class="glyphicon glyphicon-home"></span> Nearby Playlists</a>
+      </li>
+      <li class="active">
+        <a href="/create"><span class="glyphicon glyphicon-plus"></span> Create Playlist</a>
+      </li>
+    </ul>
+  </div>
+    </nav>
+    <div class="container">
+    <div class="jumbotron">
+        <h1>Create a Playlist</h1>
+        <p>Create a playlist to be collaborated on at a party</p>
+    </div>
+    <p style="display:none">ID: <%= id %></p>
+    <div class="form-group">
+        <label for="name">Playlist name</label>
+        <input id="name" type="email" class="form-control" name="name" type="text" placeholder="Name" />  
+    </div>
+        <input style="display:none" id="longitude" name="longitude" type="text" />
+        <input style="display:none" id="latitude" name="latitude" type="text" />
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" class="form-control" name="password" type="text" placeholder="Password" />
+    </div>
+    <button type="submit" class="btn btn-default" onclick="createPlaylist()">Create Playlist</button>
+    </div>
   </body>
 </html>
