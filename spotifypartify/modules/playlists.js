@@ -33,36 +33,23 @@ var db = new MongoDB(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}),
 // Creates a new collection 'playlists'
 var playlists = db.collection('playlists');
 
-exports.generateRandomString = function(length)
+exports.sortPlaylists = function(longitude, latitude, callback)
 {
-   /**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-}
-
-
-exports.createPlaylist = function(id, name, access_token, callback)
-{
-    spotifyApi.setAccessToken(access_token);
-    console.log(id);
-    console.log(name);
-    console.log(access_token);
-    // Create new playlist
-    spotifyApi.createPlaylist(id, name, {'public': true}, function(err, data) {
-        if (err) {
-            console.error('Something went wrong!');
-        } else {
-            console.log(data);
-            callback(data.body);
-        }
-    });
+	db.playlists.find(
+	   {
+	     location:
+	        { location : { $near : [ longitude, latitude ], $maxDistance: 1 } }
+	   },
+	   function(err, array) 
+	   {
+	   	if(err)
+	   	{
+	   		console.log('db.collection.find failed');
+	   	}
+	   	else
+	   	{
+	   		callback(array);
+	   	}
+	   }
+	)
 }
