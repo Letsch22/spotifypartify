@@ -50,19 +50,18 @@ exports.generateRandomString = function(length)
 }
 
 
-exports.createPlaylist = function(id, name, access_token, callback)
+exports.createPlaylist = function(id, name, access_token, refresh_token, long, lat, pass, callback)
 {
     spotifyApi.setAccessToken(access_token);
-    console.log(id);
-    console.log(name);
-    console.log(access_token);
     // Create new playlist
     spotifyApi.createPlaylist(id, name, {'public': true}, function(err, data) {
         if (err) {
             console.error('Something went wrong!');
         } else {
-            console.log(data);
-            callback(data.body);
+            playlists.insert({id: id, name: name, loc: [parseFloat(long), parseFloat(lat)], password: pass, access_token: access_token, refresh_token: refresh_token,body: data}, function(){
+                console.log('worked');
+                callback(data.body);
+            });
         }
     });
 }
