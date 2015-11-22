@@ -67,7 +67,7 @@ router.get('/create', function(req, res, next) {
     
         request.post(authOptions, function(error, response, body) {
         if (!error && response.statusCode === 200) {
-    
+            console.log('auth response: ' + response);
             var access_token = body.access_token,
                 refresh_token = body.refresh_token;
     
@@ -80,9 +80,8 @@ router.get('/create', function(req, res, next) {
             
             // use the access token to access the Spotify Web API
             request.get(options, function(error, response, body) {
-                console.log(body);
                 var user_id = body.id;
-                res.render('create', { title: 'Create' , id: user_id, body: body, access_token: access_token, refresh_token: refresh_token});
+                res.render('create', { title: 'Create' , id: user_id, body: body, access_token: access_token, refresh_token: refresh_token, code: code});
             });
 
         }
@@ -92,10 +91,21 @@ router.get('/create', function(req, res, next) {
     
 });
 
+router.get('/playlist', function(req, res, next) { 
+    var playlistID = req.query.id;
+    playlists.getPlaylistById(playlistID, function(playlist){
+        console.log(playlist[0].body.body.id);
+        spotify.getPlaylist(playlist[0].id, playlist[0].body.body.id, playlist[0].access_token, playlist[0].refresh_token, playlist[0].code, function(data){
+            console.log('Some information about this playlist', data.body);
+            res.render('playlist', { title: 'Playlist - ' + playlist.name });
+        });
+    })
+});
+
 //Create post handling
 router.post('/create', function(req, res){
     
-    spotify.createPlaylist(req.body.id, req.body.name, req.body.access_token, req.body.refresh_token, req.body.long, req.body.lat, req.body.pass, function(data){
+    spotify.createPlaylist(req.body.id, req.body.name, req.body.access_token, req.body.refresh_token, req.body.code, req.body.long, req.body.lat, req.body.pass, function(data){
         console.log(data.body);
         res.send(data.body);
     });

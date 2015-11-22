@@ -50,7 +50,7 @@ exports.generateRandomString = function(length)
 }
 
 
-exports.createPlaylist = function(id, name, access_token, refresh_token, long, lat, pass, callback)
+exports.createPlaylist = function(id, name, access_token, refresh_token, code,  long, lat, pass, callback)
 {
     spotifyApi.setAccessToken(access_token);
     // Create new playlist
@@ -58,10 +58,44 @@ exports.createPlaylist = function(id, name, access_token, refresh_token, long, l
         if (err) {
             console.error('Something went wrong!');
         } else {
-            playlists.insert({id: id, name: name, loc: [parseFloat(long), parseFloat(lat)], password: pass, access_token: access_token, refresh_token: refresh_token,body: data}, function(){
+            playlists.insert({id: id, name: name, loc: [parseFloat(long), parseFloat(lat)], password: pass, access_token: access_token, refresh_token: refresh_token, code: code,body: data}, function(){
                 console.log('worked');
                 callback(data.body);
             });
         }
     });
+}
+
+exports.getPlaylist = function(user_id, playlist_id, access_token, refresh_token, code, callback)
+{
+    /*
+    console.log('right here');
+    console.log(access_token);
+    console.log(refresh_token);
+    spotifyApi.setAccessToken(access_token);
+    spotifyApi.setRefreshToken(refresh_token);
+    spotifyApi.refreshAccessToken(function(err, data){
+        console.log(data);
+    });
+    */
+    /*
+    spotifyApi.setAccessToken(access_token);
+    console.log('hi');
+    spotifyApi.getUserPlaylists(user_id, function(err, data) {
+        console.log('Some information about this playlist', data.body);
+        callback(data.body);
+    });
+    */
+
+    // First retrieve an access token
+    spotifyApi.authorizationCodeGrant(code, function(err, data){
+        spotifyApi.setAccessToken(data.body['access_token']);
+        console.log('hi');
+        spotifyApi.getUserPlaylists(user_id, playlist_id, function(err, data) {
+            console.log('Some information about this playlist', data.body);
+            callback(data.body);
+        });
+    });
+
+    
 }

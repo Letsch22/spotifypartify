@@ -44,11 +44,18 @@ exports.sortPlaylists = function(longitude, latitude, callback)
             }
             else
             {
-                console.log(array);
                 callback(array);
             }
         });
     });
-    
 
+}
+
+exports.getPlaylistById = function(id, callback)
+{
+    console.log('id'+id);
+    playlists.find({"body.body.id": id}).limit(1).toArray( function(e, o){
+        console.log('obj'+o);
+        callback(o);
+    });
 }
