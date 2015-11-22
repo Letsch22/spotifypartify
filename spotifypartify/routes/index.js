@@ -3,41 +3,14 @@ var router = express.Router();
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-var SpotifyWebApi = require('spotify-web-api-node');
 
+var spotify = require('../modules/spotify'); //Spotify module
 
 var client_id = '3fb8c65f0e22480d8866f29dd00f3d18'; // Your client id
 var client_secret = 'fab9f851e0e848d49104f683b585ffc0'; // Your client secret
 var redirect_uri = 'http://localhost:3000/create'; // Your redirect uri
 
-// credentials are optional
-var spotifyApi = new SpotifyWebApi({
-  clientId : client_id,
-  clientSecret : client_secret,
-  redirectUri : redirect_uri
-});
 
-/**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-var generateRandomString = function(length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
-
-var stateKey = 'spotify_auth_state';
-
-/*
-app.use(express.static(__dirname + '/public'))
-   .use(cookieParser());
-*/
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -49,14 +22,14 @@ router.get('/create', function(req, res, next) {
     
   // your application requests refresh and access tokens
   // after checking the state parameter
-
+  var stateKey = 'spotify_auth_state';
   var code = req.query.code || null;
   var state = req.query.state || null;
   var storedState = req.cookies ? req.cookies[stateKey] : null;
   
   //If query doesn't contain code & state, ask for spotify api auth
   if(code === null && state === null){
-    var state = generateRandomString(16);
+    var state = spotify.generateRandomString(16);
     res.cookie(stateKey, state);
     
     // your application requests authorization
@@ -121,6 +94,12 @@ router.get('/create', function(req, res, next) {
 //Create post handling
 router.post('/create', function(req, res){
     
+    spotify.createPlaylist(req.body.id, req.body.name, req.body.access_token, function(data){
+        console.log(data.body);
+        res.send(data.body);
+    });
+    
+    /*
     spotifyApi.setAccessToken(req.body.access_token);
     console.log(typeof(req.body.name));
     // Create new playlist
@@ -132,7 +111,7 @@ router.post('/create', function(req, res){
             res.send(data.body);
         }
     });
-    
+    */
 });
 
 module.exports = router;
