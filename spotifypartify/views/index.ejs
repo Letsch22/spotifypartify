@@ -16,7 +16,7 @@
                   var html = "";
                   for (var i = 0; i <= res.length - 1; i++){
                     console.log(res[i].id);
-                    html += '<li><a href="/playlist&id=' + res[i].id + '">' + res[i].name + '</a></li>'; // add actual database item here
+                    html += '<li><a href="/playlist&id=' + res[i].body.body.id + '">' + res[i].name + '</a></li>';
                   }
                   document.getElementById('playlists').innerHTML = html;
               }
