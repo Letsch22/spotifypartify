@@ -8,14 +8,18 @@
         //AJAX post to create playlist
         function createPlaylist(){      
             var name = document.getElementById('name').value;  
+            var long = document.getElementById('longitude').value;
+            var lat = document.getElementById('latitude').value;
+            var pass = document.getElementById('password').value;
             console.log(name);        
             $.ajax( {
                 url: '/create',
                 type: 'POST',
-                data: {"name": name, "id": "<%= id %>", "access_token": '<%= access_token %>', "refresh_token": '<%= refresh_token %>'},
+                data: {"name": name, "id": "<%= id %>", "access_token": '<%= access_token %>', "refresh_token": '<%= refresh_token %>', "long": long, "lat": lat, "pass": pass},
                 success: function(res) {
                     console.log('success');  
                     console.log(res);
+                    window.location.href = '/';
                 }
             });                              
         }
@@ -35,11 +39,10 @@
   <body>
     <h1><%= title %></h1>
     <p>ID: <%= id %></p>
-    <form type="POST" name="createPlaylist">
-        <input id="name" name="name" type="text" />  
-        <input id="longitude" name="longitude" type="text" />
-        <input id="latitude" name="latitude" type="text" />
-        <button onclick="createPlaylist()">Create Playlist</button>
-    </form>
+    <input id="name" name="name" type="text" />  
+    <input id="longitude" name="longitude" type="text" />
+    <input id="latitude" name="latitude" type="text" />
+    <input id="password" name="password" type="text" />
+    <button onclick="createPlaylist()">Create Playlist</button>
   </body>
 </html>

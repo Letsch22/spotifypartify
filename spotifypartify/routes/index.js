@@ -95,9 +95,8 @@ router.get('/create', function(req, res, next) {
 //Create post handling
 router.post('/create', function(req, res){
     
-    spotify.createPlaylist(req.body.id, req.body.name, req.body.access_token, function(data){
+    spotify.createPlaylist(req.body.id, req.body.name, req.body.access_token, req.body.refresh_token, req.body.long, req.body.lat, req.body.pass, function(data){
         console.log(data.body);
-        
         res.send(data.body);
     });
     
