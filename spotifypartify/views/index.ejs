@@ -5,7 +5,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script>
-          $( document ).ready(function(){       
+      $( document ).ready(function(){       
           $.ajax( {
               url: '/',
               type: 'POST',
@@ -13,6 +13,12 @@
               success: function(res) {
                   console.log('success');  
                   console.log(res);
+                  var html = "";
+                  for (var i = 0; i <= res.length - 1; i++){
+                    console.log(res[i].id);
+                    html += '<li><a href="/playlist&id=' + res[i].id + '">' + res[i].name + '</a></li>'; // add actual database item here
+                  }
+                  document.getElementById('playlists').innerHTML = html;
               }
           });                              
       });
@@ -23,8 +29,6 @@
     <p>
         <button><a href="/create">Create a playlist</a></button>
     </p>
-    <p>
-        <button>Find playlists near me</button>
-    </p>
+    <ul id="playlists"></ul>
   </body>
 </html>

@@ -37,7 +37,7 @@ exports.sortPlaylists = function(longitude, latitude, callback)
 {
 
     playlists.ensureIndex({loc: "2d"}, function(){
-        playlists.find({loc : { $near : [ longitude, latitude ]}}).toArray( function(err, array){
+        playlists.find({loc : { $near : [ parseFloat(longitude), parseFloat(latitude) ]}}).toArray( function(err, array){
             if(err)
             {
                 console.log('db.collection.find failed');
