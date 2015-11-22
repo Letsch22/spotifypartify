@@ -113,3 +113,16 @@ exports.getPlaylist = function(user_id, playlist_id, access_token, refresh_token
     */
     
 }
+
+exports.searchTracks = function(track_name, access_token, refresh_token, callback)
+{
+  spotifyApi.setAccessToken(access_token);
+  spotifyApi.setRefreshToken(refresh_token);
+  spotifyApi.searchTracks(track_name)
+  .then(function(data) {
+    console.log(data.body);
+    callback(data.body);
+  }, function(err) {
+    console.error(err);
+  });
+}

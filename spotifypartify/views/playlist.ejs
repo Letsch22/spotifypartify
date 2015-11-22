@@ -14,8 +14,25 @@
                         console.log(res);
                         //renderSongs(res);
                     }
-                });                              
+                });
+            var timeoutID = null;
+            function findMember(str) {
+              $.ajax({
+                url: '/playlist',
+                type: 'POST',
+                data: {'key': 'searchTracks', 'track_name': str},
+                success: function(res) {
+                  console.log(res);
+                }
+              })
+            }
+            $('#searchbox').keyup(function() {
+              clearTimeout(timeoutID);
+              var $target = $(this);
+              timeoutID = setTimeout(function() { findMember($target.val()); }, 500);
             });
+          });
+
             
         function renderSongs(playlist){
             var html = "";
