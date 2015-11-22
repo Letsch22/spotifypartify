@@ -3,10 +3,9 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script>
-          $( document ).ready(function(){      
-          var name = document.getElementById('name').value;  
-          console.log(name);        
+          $( document ).ready(function(){       
           $.ajax( {
               url: '/',
               type: 'POST',
@@ -14,11 +13,9 @@
               success: function(res) {
                   console.log('success');  
                   console.log(res);
-                  window.open('/');
               }
           });                              
       });
-      console.log( "<%= body.id %>" );
     </script>
   </head>
   <body>

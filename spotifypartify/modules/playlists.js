@@ -35,21 +35,20 @@ var playlists = db.collection('playlists');
 
 exports.sortPlaylists = function(longitude, latitude, callback)
 {
-	db.playlists.find(
-	   {
-	     location:
-	        { location : { $near : [ longitude, latitude ], $maxDistance: 1 } }
-	   },
-	   function(err, array) 
-	   {
-	   	if(err)
-	   	{
-	   		console.log('db.collection.find failed');
-	   	}
-	   	else
-	   	{
-	   		callback(array);
-	   	}
-	   }
-	)
+
+    playlists.ensureIndex({loc: "2d"}, function(){
+        playlists.find({loc : { $near : [ longitude, latitude ]}}).toArray( function(err, array){
+            if(err)
+            {
+                console.log('db.collection.find failed');
+            }
+            else
+            {
+                console.log(array);
+                callback(array);
+            }
+        });
+    });
+    
+
 }

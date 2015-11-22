@@ -5,6 +5,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
 var spotify = require('../modules/spotify'); //Spotify module
+var playlists = require('../modules/playlists'); //Spotify module
 
 var client_id = '3fb8c65f0e22480d8866f29dd00f3d18'; // Your client id
 var client_secret = 'fab9f851e0e848d49104f683b585ffc0'; // Your client secret
