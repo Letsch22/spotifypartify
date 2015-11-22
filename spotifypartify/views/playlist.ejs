@@ -5,7 +5,28 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script type="text/javascript" src="/javascripts/jquery.js"></script>
     <script>
-       
+        $(document).ready(function() {
+            $.ajax({
+                    url: '/playlist',
+                    type: 'POST',
+                    data: {"key": 'getSongs', "playlist_id": "<%= id %>"},
+                    success: function(res) {
+                        console.log(res);
+                        //renderSongs(res);
+                    }
+                });                              
+            });
+            
+        function renderSongs(playlist){
+            var html = "";
+            console.log(playlist.body.body.tracks);
+            for (var i = 0; i <= playlist.body.body.tracks - 1; i++){
+                console.log(playlist.body.body.tracks[i]);
+                console.log('hi');
+                //html += '<a href="/playlist?id=' + res[i].body.body.id + '" class="list-group-item list-group-item-linkable">' + res[i].name + '</a>';
+            }
+            document.getElementById('playlist-songs').innerHTML = html;
+        }
     </script>
   </head>
   <body>
@@ -14,7 +35,9 @@
         <!--SEARCH-->
         
         <!--Playlist songs-->
-        
+        <ul id="playlist-songs">
+            
+        </ul>
     </div>
   </body>
 </html>
